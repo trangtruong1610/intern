@@ -1,21 +1,14 @@
-from sqlalchemy import *
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import  declarative_base
 import sqlalchemy as db
 
 engine = db.create_engine('postgresql+psycopg2://postgres:trangtruong@localhost:5432/ggbenefits')
-Session = sessionmaker(bind=engine)
-session = Session()
+connection = engine.connect()
+metadata = db.MetaData()
+clinics = db.Table('clinics', metadata, autoload=True, autoload_with=engine)
 
-Base = declarative_base()
 
-class Customer(Base):
-    __tablename__ = 'clinics'
-    name = Column(String, primary_key=True)
-    address = Column(String)
-    phone = Column(Integer)
-    lat = Column(Float)
-    lng = Column(Float)
+query = db.select([clinics])
+ResultProxy = connection.execute(query)
+clinics_content = ResultProxy.fetchall()
 
-for i in session.query(Customer):
-    print(f'{i.name, i.address, i.phone, i.lat, i.lng}')
+for i in clinics_content:
+    print(i)
