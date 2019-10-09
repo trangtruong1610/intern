@@ -8,7 +8,7 @@ clinics = db.Table('clinics', metadata, autoload=True, autoload_with=engine)
 
 query = db.select([clinics])
 ResultProxy = connection.execute(query)
-clinics_columns = ResultProxy.fetchall()
+clinics_content = ResultProxy.fetchall()
 
-for i in clinics_columns:
+for i in clinics_content:
     print(i)
