@@ -17,5 +17,7 @@ class Customer(Base):
     lat = Column(Float)
     lng = Column(Float)
 
+new_customer = Customer(name='D', address='567 RFV', phone = 1234567891, lat=567.789, lng=567.789)
+session.add(new_customer)
 for i in session.query(Customer):
     print(f'{i.name, i.address, i.phone, i.lat, i.lng}')
